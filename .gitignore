@@ -1,0 +1,10 @@
+# Credenciales locales
+.env
+
+# Dependencias y archivos del sistema/editor
+/vendor/
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
