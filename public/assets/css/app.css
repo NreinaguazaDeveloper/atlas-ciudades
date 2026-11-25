@@ -1,0 +1,554 @@
+/*
+ * Atlas de ciudades - estilos
+ * Paleta inspirada en mapas físicos: agua (fondo), tinta azul-petróleo (texto),
+ * ocre de curvas de nivel (ciudades más pobladas) y salvia (menos pobladas).
+ * Diseño responsive: computador, tablet y teléfono. Soporta modo oscuro.
+ */
+
+:root {
+    --paper: #edf2f1;
+    --surface: #f8fbfa;
+    --ink: #14303a;
+    --muted: #546c75;
+    --line: #c5d4d5;
+    --sea: #2b6c7c;
+    --sea-soft: #d5e6e9;
+    --ochre: #a96d14;
+    --ochre-bar: #e2b25f;
+    --sage-bar: #9cc3ba;
+    --danger: #9b2c22;
+
+    --font-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
+    --font-body: "Public Sans", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+    --step--1: 0.875rem;
+    --step-0: 1rem;
+    --step-1: 1.25rem;
+    --step-2: 1.625rem;
+    --step-hero: clamp(2.75rem, 9vw, 6.25rem);
+
+    --gap: clamp(1rem, 3vw, 2rem);
+    color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --paper: #0e1c21;
+        --surface: #13262d;
+        --ink: #e2edee;
+        --muted: #93aab0;
+        --line: #284149;
+        --sea: #7bbccb;
+        --sea-soft: #1b3841;
+        --ochre: #e7ad55;
+        --ochre-bar: #9b6a22;
+        --sage-bar: #3f7368;
+        --danger: #f08a7e;
+        color-scheme: dark;
+    }
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: var(--step-0);
+    line-height: 1.55;
+}
+
+a {
+    color: var(--sea);
+}
+
+:focus-visible {
+    outline: 3px solid var(--ochre);
+    outline-offset: 2px;
+}
+
+.skip {
+    position: absolute;
+    left: -999px;
+}
+
+.skip:focus {
+    left: 1rem;
+    top: 1rem;
+    background: var(--surface);
+    padding: 0.5rem 0.75rem;
+    z-index: 10;
+}
+
+/* ---------- Estructura general ---------- */
+
+.site-header,
+.page,
+.site-footer {
+    width: min(100% - 2 * var(--gap), 72rem);
+    margin-inline: auto;
+}
+
+.site-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 1rem;
+    padding-block: 1.25rem 0.75rem;
+    border-bottom: 1px solid var(--line);
+}
+
+.brand {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: var(--step-1);
+    color: var(--ink);
+    text-decoration: none;
+}
+
+.brand-note {
+    color: var(--muted);
+    font-size: var(--step--1);
+}
+
+.page {
+    padding-block: clamp(1.5rem, 5vw, 3rem);
+}
+
+.site-footer {
+    border-top: 1px solid var(--line);
+    padding-block: 1.25rem 2rem;
+    color: var(--muted);
+    font-size: var(--step--1);
+}
+
+h1,
+h2,
+h3 {
+    font-family: var(--font-display);
+    line-height: 1.1;
+    margin: 0;
+}
+
+/* ---------- Selector de país ---------- */
+
+.finder h1 {
+    font-size: var(--step-2);
+    font-weight: 700;
+}
+
+.lede {
+    margin: 0.35rem 0 1.25rem;
+    color: var(--muted);
+    max-width: 60ch;
+}
+
+.finder-form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+}
+
+.finder-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    max-width: 40rem;
+}
+
+select,
+input[type="search"],
+button {
+    font: inherit;
+    border-radius: 0.5rem;
+}
+
+select {
+    flex: 1 1 16rem;
+    min-width: 0;
+    max-width: 100%;
+    min-height: 3rem;
+    padding: 0.6rem 0.8rem;
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--line);
+}
+
+.finder-form button {
+    min-height: 3rem;
+    padding: 0.6rem 1.25rem;
+    border: 0;
+    background: var(--sea);
+    color: var(--surface);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.finder-form button:hover {
+    filter: brightness(1.08);
+}
+
+.alert {
+    margin-top: 0.75rem;
+    color: var(--danger);
+    font-weight: 600;
+}
+
+.starter {
+    margin-top: 2.5rem;
+    color: var(--muted);
+}
+
+.quick-picks {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.quick-picks a {
+    display: inline-block;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    text-decoration: none;
+    background: var(--surface);
+}
+
+/* ---------- Encabezado del país (elemento protagonista) ---------- */
+
+.country {
+    margin-top: clamp(2rem, 6vw, 3.5rem);
+}
+
+.country-where {
+    margin: 0;
+    color: var(--muted);
+}
+
+.country-name {
+    font-size: var(--step-hero);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 0.95;
+    margin: 0.2rem 0 1.5rem;
+    overflow-wrap: anywhere;
+}
+
+.facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: 1rem 1.25rem;
+    margin: 0;
+    padding-block: 1rem;
+    border-block: 1px solid var(--line);
+}
+
+.facts dt {
+    color: var(--muted);
+    font-size: var(--step--1);
+}
+
+.facts dd {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.weather {
+    margin: 0.9rem 0 0;
+    font-size: var(--step--1);
+    color: var(--muted);
+}
+
+.weather-value {
+    color: var(--ink);
+    font-weight: 600;
+}
+
+/* ---------- Idiomas ---------- */
+
+.languages {
+    margin-top: 2rem;
+}
+
+.languages h3,
+.ranking h3,
+.all-head h3 {
+    font-size: var(--step-1);
+    font-weight: 700;
+}
+
+.lang-list {
+    list-style: none;
+    padding: 0;
+    margin: 0.75rem 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.lang-list li {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    padding: 0.3rem 0.75rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: var(--step--1);
+}
+
+.lang-list li.is-official {
+    background: var(--sea-soft);
+    border-color: transparent;
+}
+
+.lang-name {
+    font-weight: 600;
+}
+
+.lang-pct {
+    font-variant-numeric: tabular-nums;
+    color: var(--muted);
+}
+
+.lang-tag {
+    color: var(--sea);
+    font-weight: 600;
+}
+
+/* ---------- Rankings Top 10 ---------- */
+
+.rankings {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: 1.5rem clamp(1.5rem, 4vw, 3rem);
+    margin-top: 2.5rem;
+}
+
+.ranking ol {
+    list-style: none;
+    counter-reset: puesto;
+    padding: 0;
+    margin: 0.9rem 0 0;
+}
+
+.ranking li {
+    counter-increment: puesto;
+    display: grid;
+    grid-template-columns: 2rem 1fr auto;
+    grid-template-areas:
+        "pos name pop"
+        ". bar bar";
+    align-items: baseline;
+    column-gap: 0.5rem;
+    padding-block: 0.55rem;
+    border-bottom: 1px solid var(--line);
+}
+
+.ranking li::before {
+    content: counter(puesto);
+    grid-area: pos;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    font-size: var(--step--1);
+}
+
+.r-name {
+    grid-area: name;
+    font-weight: 600;
+    min-width: 0;
+}
+
+.r-name small {
+    display: block;
+    font-weight: 400;
+    color: var(--muted);
+    font-size: 0.8rem;
+}
+
+.r-pop {
+    grid-area: pop;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+}
+
+.r-bar {
+    grid-area: bar;
+    height: 0.4rem;
+    margin-top: 0.35rem;
+    width: var(--w);
+    border-radius: 0 999px 999px 0;
+    transform-origin: left;
+}
+
+.ranking--most .r-bar {
+    background: var(--ochre-bar);
+}
+
+.ranking--least .r-bar {
+    background: var(--sage-bar);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .r-bar {
+        animation: grow 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    }
+
+    .ranking li:nth-child(n) .r-bar {
+        animation-delay: calc(var(--i, 0) * 40ms);
+    }
+
+    @keyframes grow {
+        from {
+            transform: scaleX(0);
+        }
+    }
+}
+
+.note,
+.empty-note {
+    color: var(--muted);
+    font-size: var(--step--1);
+    margin-top: 1rem;
+}
+
+.empty-note {
+    font-size: var(--step-0);
+    margin-top: 2rem;
+}
+
+/* ---------- Tabla completa ---------- */
+
+.all-cities {
+    margin-top: 3rem;
+}
+
+.all-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: 0.75rem 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.filter {
+    display: grid;
+    gap: 0.25rem;
+    font-size: var(--step--1);
+    color: var(--muted);
+    flex: 0 1 18rem;
+}
+
+.filter input {
+    min-height: 2.75rem;
+    padding: 0.5rem 0.75rem;
+    color: var(--ink);
+    background: var(--surface);
+    border: 1px solid var(--line);
+}
+
+.table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--line);
+    border-radius: 0.5rem;
+    background: var(--surface);
+    max-height: 32rem;
+    overflow-y: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
+}
+
+th,
+td {
+    padding: 0.55rem 0.9rem;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+    white-space: nowrap;
+}
+
+th {
+    position: sticky;
+    top: 0;
+    background: var(--surface);
+    z-index: 1;
+}
+
+th button {
+    all: unset;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: var(--step--1);
+    color: var(--muted);
+}
+
+th button:focus-visible {
+    outline: 3px solid var(--ochre);
+}
+
+th[aria-sort] button {
+    color: var(--ink);
+}
+
+th[aria-sort="ascending"] button::after {
+    content: " ▲";
+    font-size: 0.7em;
+}
+
+th[aria-sort="descending"] button::after {
+    content: " ▼";
+    font-size: 0.7em;
+}
+
+.num {
+    text-align: right;
+}
+
+tbody tr:hover {
+    background: var(--sea-soft);
+}
+
+/* ---------- Página de error ---------- */
+
+.error-page h1 {
+    font-size: var(--step-2);
+}
+
+.error-detail {
+    white-space: pre-wrap;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+}
+
+/* ---------- Teléfonos ---------- */
+
+@media (max-width: 30rem) {
+    .finder-form button {
+        width: 100%;
+    }
+
+    th,
+    td {
+        padding: 0.5rem 0.6rem;
+    }
+}
