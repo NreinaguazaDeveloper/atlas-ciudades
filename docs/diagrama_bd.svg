@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="495" viewBox="0 0 980 495" font-family="Public Sans, Segoe UI, Arial, sans-serif">
+<rect width="980" height="495" fill="#ffffff"/>
+
+<path d="M370 88 H620" stroke="#14303a" stroke-width="1.6" fill="none"/>
+<path d="M500 88 V260 H780 V300" stroke="#14303a" stroke-width="1.6" fill="none"/>
+<path d="M370 400 H540 V348 H620" stroke="#a96d14" stroke-width="1.6" stroke-dasharray="6 5" fill="none"/>
+<text x="378" y="80" font-size="13" font-weight="700" fill="#14303a">1</text>
+<text x="604" y="80" font-size="13" font-weight="700" fill="#14303a">N</text>
+<text x="520" y="80" font-size="12" fill="#546c75" text-anchor="middle">habla</text>
+<text x="790" y="294" font-size="13" font-weight="700" fill="#14303a">N</text>
+<text x="640" y="252" font-size="12" fill="#546c75" text-anchor="middle">tiene (city.CountryCode → country.Code)</text>
+<text x="378" y="392" font-size="13" font-weight="700" fill="#a96d14">0..1</text>
+<text x="604" y="340" font-size="13" font-weight="700" fill="#a96d14">1</text>
+<text x="548" y="392" font-size="12" fill="#a96d14">capital</text>
+<rect x="40" y="40" width="330" height="396" rx="8" fill="#f8fbfa" stroke="#2b6c7c" stroke-width="1.5"/>
+<path d="M40 76 H370" stroke="#2b6c7c"/>
+<rect x="40" y="40" width="330" height="36" rx="8" fill="#2b6c7c"/>
+<rect x="40" y="60" width="330" height="16" fill="#2b6c7c"/>
+<text x="54" y="64" fill="#fff" font-weight="700" font-size="15">country (País)</text>
+<text x="52" y="93" fill="#a96d14" font-size="11" font-weight="700">PK</text>
+<text x="102" y="93" fill="#14303a" font-size="13" font-weight="600">Code</text>
+<text x="358" y="93" fill="#546c75" font-size="12" text-anchor="end">char(3)</text>
+<rect x="41" y="100" width="328" height="24" fill="#edf2f1"/>
+<text x="52" y="117" fill="#546c75" font-size="11" font-weight="700"></text>
+<text x="102" y="117" fill="#14303a" font-size="13" font-weight="400">Name</text>
+<text x="358" y="117" fill="#546c75" font-size="12" text-anchor="end">char(52)</text>
+<text x="52" y="141" fill="#546c75" font-size="11" font-weight="700"></text>
+<text x="102" y="141" fill="#14303a" font-size="13" font-weight="400">Continent</text>
+<text x="358" y="141" fill="#546c75" font-size="12" text-anchor="end">enum</text>
+<rect x="41" y="148" width="328" height="24" fill="#edf2f1"/>
+<text x="52" y="165" fill="#546c75" font-size="11" font-weight="700"></text>
+<text x="102" y="165" fill="#14303a" font-size="13" font-weight="400">Region</text>
+<text x="358" y="165" fill="#546c75" font-size="12" text-anchor="end">char(26)</text>
+<text x="52" y="189" fill="#546c75" font-size="11" font-weight="700"></text>
+<text x="102" y="189" fill="#14303a" font-size="13" font-weight="400">SurfaceArea</text>
+<text x="358" y="189" fill="#546c75" font-size="12" text-anchor="end">float(10,2)</text>
+<rect x="41" y="196" width="328" height="24" fill="#edf2f1"/>
+<text x="52" y="213" fill="#546c75" font-size="11" font-weight="700"></text>
+<text x="102" y="213" fill="#14303a" font-size="13" font-weight="400">IndepYear</text>
+<text x="358" y="213" fill="#546c75" font-size="12" text-anchor="end">smallint</text>
+<text x="52" y="237" fill="#546c75" font-size="11" font-weight="700"></text>
+<text x="102" y="237" fill="#14303a" font-size="13" font-weight="400">Population</text>
+<text x="358" y="237" fill="#546c75" font-size="12" text-anchor="end">int</text>
+<rect x="41" y="244" width="328" height="24" fill="#edf2f1"/>
+<text x="52" y="261" fill="#546c75" font-size="11" font-weight="700"></text>
+<text x="102" y="261" fill="#14303a" font-size="13" font-weight="400">LifeExpectancy</text>
+<text x="358" y="261" fill="#546c75" font-size="12" text-anchor="end">float(3,1)</text>
+<text x="52" y="285" fill="#546c75" font-size="11" font-weight="700"></text>
+<text x="102" y="285" fill="#14303a" font-size="13" font-weight="400">GNP</text>
+<text x="358" y="285" fill="#546c75" font-size="12" text-anchor="end">float(10,2)</text>
+<rect x="41" y="292" width="328" height="24" fill="#edf2f1"/>
+<text x="52" y="309" fill="#546c75" font-size="11" font-weight="700"></text>
+<text x="102" y="309" fill="#14303a" font-size="13" font-weight="400">GNPOld</text>
+<text x="358" y="309" fill="#546c75" font-size="12" text-anchor="end">float(10,2)</text>
+<text x="52" y="333" fill="#546c75" font-size="11" font-weight="700"></text>
+<text x="102" y="333" fill="#14303a" font-size="13" font-weight="400">LocalName</text>
+<text x="358" y="333" fill="#546c75" font-size="12" text-anchor="end">char(45)</text>
+<rect x="41" y="340" width="328" height="24" fill="#edf2f1"/>
+<text x="52" y="357" fill="#546c75" font-size="11" font-weight="700"></text>
+<text x="102" y="357" fill="#14303a" font-size="13" font-weight="400">GovernmentForm</text>
+<text x="358" y="357" fill="#546c75" font-size="12" text-anchor="end">char(45)</text>
+<text x="52" y="381" fill="#546c75" font-size="11" font-weight="700"></text>
+<text x="102" y="381" fill="#14303a" font-size="13" font-weight="400">HeadOfState</text>
+<text x="358" y="381" fill="#546c75" font-size="12" text-anchor="end">char(60)</text>
+<rect x="41" y="388" width="328" height="24" fill="#edf2f1"/>
+<text x="52" y="405" fill="#a96d14" font-size="11" font-weight="700">FK*</text>
+<text x="102" y="405" fill="#14303a" font-size="13" font-weight="600">Capital</text>
+<text x="358" y="405" fill="#546c75" font-size="12" text-anchor="end">int → city.ID</text>
+<text x="52" y="429" fill="#546c75" font-size="11" font-weight="700"></text>
+<text x="102" y="429" fill="#14303a" font-size="13" font-weight="400">Code2</text>
+<text x="358" y="429" fill="#546c75" font-size="12" text-anchor="end">char(2)</text><rect x="620" y="40" width="320" height="132" rx="8" fill="#f8fbfa" stroke="#2b6c7c" stroke-width="1.5"/>
+<path d="M620 76 H940" stroke="#2b6c7c"/>
+<rect x="620" y="40" width="320" height="36" rx="8" fill="#2b6c7c"/>
+<rect x="620" y="60" width="320" height="16" fill="#2b6c7c"/>
+<text x="634" y="64" fill="#fff" font-weight="700" font-size="15">countrylanguage (Idioma)</text>
+<text x="632" y="93" fill="#a96d14" font-size="11" font-weight="700">PK FK</text>
+<text x="682" y="93" fill="#14303a" font-size="13" font-weight="600">CountryCode</text>
+<text x="928" y="93" fill="#546c75" font-size="12" text-anchor="end">char(3)</text>
+<rect x="621" y="100" width="318" height="24" fill="#edf2f1"/>
+<text x="632" y="117" fill="#a96d14" font-size="11" font-weight="700">PK</text>
+<text x="682" y="117" fill="#14303a" font-size="13" font-weight="600">Language</text>
+<text x="928" y="117" fill="#546c75" font-size="12" text-anchor="end">char(30)</text>
+<text x="632" y="141" fill="#546c75" font-size="11" font-weight="700"></text>
+<text x="682" y="141" fill="#14303a" font-size="13" font-weight="400">IsOfficial</text>
+<text x="928" y="141" fill="#546c75" font-size="12" text-anchor="end">enum('T','F')</text>
+<rect x="621" y="148" width="318" height="24" fill="#edf2f1"/>
+<text x="632" y="165" fill="#546c75" font-size="11" font-weight="700"></text>
+<text x="682" y="165" fill="#14303a" font-size="13" font-weight="400">Percentage</text>
+<text x="928" y="165" fill="#546c75" font-size="12" text-anchor="end">float(4,1)</text><rect x="620" y="300" width="320" height="156" rx="8" fill="#f8fbfa" stroke="#2b6c7c" stroke-width="1.5"/>
+<path d="M620 336 H940" stroke="#2b6c7c"/>
+<rect x="620" y="300" width="320" height="36" rx="8" fill="#2b6c7c"/>
+<rect x="620" y="320" width="320" height="16" fill="#2b6c7c"/>
+<text x="634" y="324" fill="#fff" font-weight="700" font-size="15">city (Ciudad)</text>
+<text x="632" y="353" fill="#a96d14" font-size="11" font-weight="700">PK</text>
+<text x="682" y="353" fill="#14303a" font-size="13" font-weight="600">ID</text>
+<text x="928" y="353" fill="#546c75" font-size="12" text-anchor="end">int</text>
+<rect x="621" y="360" width="318" height="24" fill="#edf2f1"/>
+<text x="632" y="377" fill="#a96d14" font-size="11" font-weight="700">FK</text>
+<text x="682" y="377" fill="#14303a" font-size="13" font-weight="600">CountryCode</text>
+<text x="928" y="377" fill="#546c75" font-size="12" text-anchor="end">char(3)</text>
+<text x="632" y="401" fill="#546c75" font-size="11" font-weight="700"></text>
+<text x="682" y="401" fill="#14303a" font-size="13" font-weight="400">Name</text>
+<text x="928" y="401" fill="#546c75" font-size="12" text-anchor="end">char(35)</text>
+<rect x="621" y="408" width="318" height="24" fill="#edf2f1"/>
+<text x="632" y="425" fill="#546c75" font-size="11" font-weight="700"></text>
+<text x="682" y="425" fill="#14303a" font-size="13" font-weight="400">District</text>
+<text x="928" y="425" fill="#546c75" font-size="12" text-anchor="end">char(20)</text>
+<text x="632" y="449" fill="#546c75" font-size="11" font-weight="700"></text>
+<text x="682" y="449" fill="#14303a" font-size="13" font-weight="400">Population</text>
+<text x="928" y="449" fill="#546c75" font-size="12" text-anchor="end">int</text><text x="40" y="478" font-size="12" fill="#546c75">PK = clave primaria · FK = clave foránea · FK* = relación lógica sin restricción declarada · 1 / N = cardinalidad</text></svg>

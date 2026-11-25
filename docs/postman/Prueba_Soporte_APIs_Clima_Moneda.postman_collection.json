@@ -1,0 +1,538 @@
+{
+  "info": {
+    "_postman_id": "64280054-dce1-4e8d-9380-89852aa2414c",
+    "name": "Prueba Soporte N1 - APIs de Clima y Cambio de Moneda",
+    "description": "Colección de la Pregunta 4. Incluye consumo exitoso y casos de error documentados de:\n- Open-Meteo (clima, sin API key)\n- OpenWeatherMap (clima, con API key)\n- ExchangeRate-API open access (cambio de moneda, sin API key)\n- API local de la app Atlas de ciudades\n\nEjecutar con Collection Runner para ver todos los tests.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Clima",
+      "item": [
+        {
+          "name": "Open-Meteo · Geocodificar ciudad (200)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde en menos de 3 segundos\", () => pm.expect(pm.response.responseTime).to.be.below(3000));",
+                  "pm.test(\"La respuesta es JSON\", () => pm.response.to.be.json);",
+                  "pm.test(\"Status 200 OK\", () => pm.response.to.have.status(200));",
+                  "const json = pm.response.json();",
+                  "pm.test(\"Encuentra la ciudad\", () => pm.expect(json.results).to.be.an(\"array\").that.is.not.empty);",
+                  "pm.collectionVariables.set(\"lat\", json.results[0].latitude);",
+                  "pm.collectionVariables.set(\"lon\", json.results[0].longitude);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://geocoding-api.open-meteo.com/v1/search?name={{city}}&count=1&language=es&countryCode={{country_iso2}}",
+              "protocol": "https",
+              "host": [
+                "geocoding-api",
+                "open-meteo",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "{{city}}"
+                },
+                {
+                  "key": "count",
+                  "value": "1"
+                },
+                {
+                  "key": "language",
+                  "value": "es"
+                },
+                {
+                  "key": "countryCode",
+                  "value": "{{country_iso2}}"
+                }
+              ]
+            },
+            "description": "Convierte el nombre de la ciudad en latitud/longitud y las guarda en variables de la colección."
+          },
+          "response": []
+        },
+        {
+          "name": "Open-Meteo · Clima actual (200)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde en menos de 3 segundos\", () => pm.expect(pm.response.responseTime).to.be.below(3000));",
+                  "pm.test(\"La respuesta es JSON\", () => pm.response.to.be.json);",
+                  "pm.test(\"Status 200 OK\", () => pm.response.to.have.status(200));",
+                  "const json = pm.response.json();",
+                  "pm.test(\"Incluye temperatura actual\", () => pm.expect(json.current.temperature_2m).to.be.a(\"number\"));",
+                  "console.log(`Bogotá: ${json.current.temperature_2m} ${json.current_units.temperature_2m}`);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.open-meteo.com/v1/forecast?latitude={{lat}}&longitude={{lon}}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code&timezone=America/Bogota",
+              "protocol": "https",
+              "host": [
+                "api",
+                "open-meteo",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "forecast"
+              ],
+              "query": [
+                {
+                  "key": "latitude",
+                  "value": "{{lat}}"
+                },
+                {
+                  "key": "longitude",
+                  "value": "{{lon}}"
+                },
+                {
+                  "key": "current",
+                  "value": "temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code"
+                },
+                {
+                  "key": "timezone",
+                  "value": "America/Bogota"
+                }
+              ]
+            },
+            "description": "Clima actual para las coordenadas guardadas. No requiere API key."
+          },
+          "response": []
+        },
+        {
+          "name": "Open-Meteo · ERROR latitud fuera de rango (400)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 400 Bad Request (error esperado)\", () => pm.response.to.have.status(400));",
+                  "const json = pm.response.json();",
+                  "pm.test(\"La API explica el error en \\\"reason\\\"\", () => {",
+                  "    pm.expect(json.error).to.eql(true);",
+                  "    pm.expect(json.reason).to.be.a(\"string\");",
+                  "});",
+                  "console.log(\"Diagnóstico:\", json.reason);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.open-meteo.com/v1/forecast?latitude=999&longitude={{lon}}&current=temperature_2m",
+              "protocol": "https",
+              "host": [
+                "api",
+                "open-meteo",
+                "com"
+              ],
+              "path": [
+                "v1",
+                "forecast"
+              ],
+              "query": [
+                {
+                  "key": "latitude",
+                  "value": "999"
+                },
+                {
+                  "key": "longitude",
+                  "value": "{{lon}}"
+                },
+                {
+                  "key": "current",
+                  "value": "temperature_2m"
+                }
+              ]
+            },
+            "description": "Caso de error controlado: la latitud debe estar entre -90 y 90."
+          },
+          "response": []
+        },
+        {
+          "name": "OpenWeatherMap · Clima actual (requiere API key)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();",
+                  "if (pm.response.code === 401) {",
+                  "    console.warn(\"401: API key ausente, inválida o aún sin activar. Detalle:\", json.message);",
+                  "}",
+                  "pm.test(\"Status 200 OK (requiere owm_api_key válida)\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Incluye temperatura\", () => pm.expect(json.main.temp).to.be.a(\"number\"));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://api.openweathermap.org/data/2.5/weather?q={{city}},{{country_iso2}}&units=metric&lang=es&appid={{owm_api_key}}",
+              "protocol": "https",
+              "host": [
+                "api",
+                "openweathermap",
+                "org"
+              ],
+              "path": [
+                "data",
+                "2.5",
+                "weather"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "{{city}},{{country_iso2}}"
+                },
+                {
+                  "key": "units",
+                  "value": "metric"
+                },
+                {
+                  "key": "lang",
+                  "value": "es"
+                },
+                {
+                  "key": "appid",
+                  "value": "{{owm_api_key}}"
+                }
+              ]
+            },
+            "description": "Si owm_api_key está vacía, es inválida o es recién creada, responde 401. Ver documentación de errores."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "2. Cambio de moneda",
+      "item": [
+        {
+          "name": "ExchangeRate-API · Tasas USD → COP (200)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde en menos de 3 segundos\", () => pm.expect(pm.response.responseTime).to.be.below(3000));",
+                  "pm.test(\"La respuesta es JSON\", () => pm.response.to.be.json);",
+                  "pm.test(\"Status 200 OK\", () => pm.response.to.have.status(200));",
+                  "const json = pm.response.json();",
+                  "pm.test(\"result = success\", () => pm.expect(json.result).to.eql(\"success\"));",
+                  "const target = pm.collectionVariables.get(\"target_currency\");",
+                  "pm.test(`Incluye la tasa ${target}`, () => pm.expect(json.rates[target]).to.be.a(\"number\"));",
+                  "pm.collectionVariables.set(\"rate\", json.rates[target]);",
+                  "console.log(`1 ${json.base_code} = ${json.rates[target]} ${target} (actualizado: ${json.time_last_update_utc})`);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://open.er-api.com/v6/latest/{{base_currency}}",
+              "protocol": "https",
+              "host": [
+                "open",
+                "er-api",
+                "com"
+              ],
+              "path": [
+                "v6",
+                "latest",
+                "{{base_currency}}"
+              ],
+              "query": []
+            },
+            "description": "Tasas de cambio del día. Guarda en la variable rate el valor de target_currency."
+          },
+          "response": []
+        },
+        {
+          "name": "ExchangeRate-API · ERROR moneda inexistente",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const json = pm.response.json();",
+                  "pm.test(\"La API devuelve error controlado\", () => pm.expect(json.result).to.eql(\"error\"));",
+                  "pm.test(\"Indica el tipo de error\", () => pm.expect(json[\"error-type\"]).to.be.a(\"string\"));",
+                  "console.log(\"Status:\", pm.response.code, \"| error-type:\", json[\"error-type\"]);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "https://open.er-api.com/v6/latest/XYZ",
+              "protocol": "https",
+              "host": [
+                "open",
+                "er-api",
+                "com"
+              ],
+              "path": [
+                "v6",
+                "latest",
+                "XYZ"
+              ],
+              "query": []
+            },
+            "description": "Caso de error: XYZ no es un código ISO 4217 válido."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "3. API local Atlas de ciudades",
+      "item": [
+        {
+          "name": "Listar países",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde en menos de 3 segundos\", () => pm.expect(pm.response.responseTime).to.be.below(3000));",
+                  "pm.test(\"La respuesta es JSON\", () => pm.response.to.be.json);",
+                  "pm.test(\"Status 200 OK\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Contiene data\", () => pm.expect(pm.response.json()).to.have.property(\"data\"));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{app_url}}/index.php?route=api/countries",
+              "host": [
+                "{{app_url}}"
+              ],
+              "path": [
+                "index.php"
+              ],
+              "query": [
+                {
+                  "key": "route",
+                  "value": "api/countries"
+                }
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Ciudades de un país",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Responde en menos de 3 segundos\", () => pm.expect(pm.response.responseTime).to.be.below(3000));",
+                  "pm.test(\"La respuesta es JSON\", () => pm.response.to.be.json);",
+                  "pm.test(\"Status 200 OK\", () => pm.response.to.have.status(200));",
+                  "pm.test(\"Contiene data\", () => pm.expect(pm.response.json()).to.have.property(\"data\"));",
+                  "const d = pm.response.json().data;",
+                  "pm.test(\"Top 10 más pobladas ordenado de mayor a menor\", () => {",
+                  "    const pops = d.top_most.map(c => c.population);",
+                  "    pm.expect(pops).to.eql([...pops].sort((a, b) => b - a));",
+                  "    pm.expect(pops.length).to.be.at.most(10);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{app_url}}/index.php?route=api/cities&code=COL",
+              "host": [
+                "{{app_url}}"
+              ],
+              "path": [
+                "index.php"
+              ],
+              "query": [
+                {
+                  "key": "route",
+                  "value": "api/cities"
+                },
+                {
+                  "key": "code",
+                  "value": "COL"
+                }
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "ERROR código de país inválido (422)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status 422 por código inválido (error esperado)\", () => pm.response.to.have.status(422));",
+                  "pm.test(\"Mensaje de error claro\", () => pm.expect(pm.response.json().error).to.include(\"code\"));"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{app_url}}/index.php?route=api/cities&code=12",
+              "host": [
+                "{{app_url}}"
+              ],
+              "path": [
+                "index.php"
+              ],
+              "query": [
+                {
+                  "key": "route",
+                  "value": "api/cities"
+                },
+                {
+                  "key": "code",
+                  "value": "12"
+                }
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "city",
+      "value": "Bogota"
+    },
+    {
+      "key": "country_iso2",
+      "value": "CO"
+    },
+    {
+      "key": "lat",
+      "value": "4.60971"
+    },
+    {
+      "key": "lon",
+      "value": "-74.08175"
+    },
+    {
+      "key": "owm_api_key",
+      "value": ""
+    },
+    {
+      "key": "base_currency",
+      "value": "USD"
+    },
+    {
+      "key": "target_currency",
+      "value": "COP"
+    },
+    {
+      "key": "rate",
+      "value": ""
+    },
+    {
+      "key": "app_url",
+      "value": "http://localhost:8000"
+    }
+  ]
+}
